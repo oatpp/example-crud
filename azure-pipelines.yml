@@ -19,7 +19,7 @@ jobs:
       - task: CMake@1
       - script: |
           cmake ..
-          make
+          sudo make
         displayName: 'CMake'
         workingDirectory: build
       - script: |
