@@ -18,7 +18,7 @@ jobs:
           mkdir build
       - script: |
           cmake ..
-          make
+          sudo make
         displayName: 'CMake'
         workingDirectory: build
       - script: |
