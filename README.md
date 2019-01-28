@@ -1,1 +1,1 @@
-# example-crud
+# example-crud [![Build Status](https://dev.azure.com/lganzzzo/lganzzzo/_apis/build/status/oatpp.example-crud?branchName=master)](https://dev.azure.com/lganzzzo/lganzzzo/_build/latest?definitionId=9?branchName=master)
