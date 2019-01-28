@@ -10,7 +10,7 @@ jobs:
     pool:
       vmImage: 'Ubuntu 16.04'
     container:
-      image: lganzzzo/alpine-cmake-bash:latest
+      image: lganzzzo/alpine-cmake:latest
     workspace:
       clean: all
     steps:
