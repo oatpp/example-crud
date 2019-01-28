@@ -9,6 +9,7 @@ include(ExternalProject)
 ExternalProject_Add(oatpp
         GIT_REPOSITORY "https://github.com/oatpp/oatpp.git"
         GIT_TAG origin/master
+        CMAKE_ARGS -DOATPP_BUILD_TESTS=OFF
 )
 
 ExternalProject_Add(oatpp_swagger
