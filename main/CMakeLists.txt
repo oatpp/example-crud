@@ -14,9 +14,12 @@ add_library(crud-lib
         src/dto/UserDto.hpp
 )
 
-target_include_directories(crud-lib
-        PUBLIC src
-)
+## include directories
+
+target_include_directories(crud-lib PUBLIC src)
+
+
+## link libs
 
 find_package(oatpp          0.19.1 REQUIRED)
 find_package(oatpp-swagger  0.19.1 REQUIRED)
@@ -26,7 +29,12 @@ target_link_libraries(crud-lib
         PUBLIC oatpp::oatpp-swagger
 )
 
+## define path to swagger-ui res folder
+
 add_definitions(-DOATPP_SWAGGER_RES_PATH="${oatpp-swagger_INCLUDE_DIRS}/../bin/oatpp-swagger/res")
+
+
+## add executables
 
 add_executable(crud-exe src/App.cpp)
 target_link_libraries(crud-exe crud-lib)

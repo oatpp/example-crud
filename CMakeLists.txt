@@ -3,6 +3,9 @@ project(project-loader)
 
 include(ExternalProject)
 
+#############################################################################
+## load all dependencies
+
 ExternalProject_Add(oatpp
         GIT_REPOSITORY "https://github.com/oatpp/oatpp.git"
         GIT_TAG origin/master
@@ -20,13 +23,19 @@ ExternalProject_Add(main
         DEPENDS oatpp oatpp_swagger
 )
 
+#############################################################################
+## make run command
+
 ExternalProject_Get_Property(main BINARY_DIR)
-message("BINARY_DIR=${BINARY_DIR}")
+
+add_custom_target(run
+        COMMAND ${BINARY_DIR}/crud-exe
+        DEPENDS main
+        WORKING_DIRECTORY ${BINARY_DIR}
+)
+
+#############################################################################
+## make test command
 
 enable_testing()
-add_test(
-        NAME
-            all-tests
-        COMMAND
-            ${BINARY_DIR}/crud-test
-)
+add_test(all-tests ${BINARY_DIR}/crud-test)

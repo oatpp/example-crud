@@ -9,27 +9,8 @@ jobs:
     continueOnError: false
     pool:
       vmImage: 'Ubuntu 16.04'
-    workspace:
-      clean: all
-    steps:
-      - script: |
-          mkdir build
-      - task: CMake@1
-      - script: |
-          cmake ..
-          make
-        displayName: 'CMake'
-        workingDirectory: build
-      - script: |
-          make test ARGS="-V"
-        displayName: 'Test'
-        workingDirectory: build
-
-  - job: macOS
-    displayName: 'Build - macOS-10.13'
-    continueOnError: false
-    pool:
-      vmImage: 'macOS-10.13'
+    container:
+      image: lganzzzo/alpine-cmake:latest
     workspace:
       clean: all
     steps:
