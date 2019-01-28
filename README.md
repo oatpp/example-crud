@@ -51,8 +51,8 @@ $ make run        ## Download, build, and install all dependencies. Run project
 #### In Docker
 
 ```
-$ docker build --no-cache -t example-crud .
-$ docker run -t example-crud
+$ docker build -t example-crud .
+$ docker run -p 8000:8000 -t example-crud
 ```
 
 ---
