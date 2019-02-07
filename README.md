@@ -1,4 +1,4 @@
-# Example-CRUD [![Build Status](https://dev.azure.com/lganzzzo/lganzzzo/_apis/build/status/oatpp.example-crud?branchName=master)](https://dev.azure.com/lganzzzo/lganzzzo/_build/latest?definitionId=9?branchName=master)
+# Example-CRUD [![Build Status](https://dev.azure.com/lganzzzo/lganzzzo/_apis/build/status/oatpp.example-crud?branchName=master)](https://dev.azure.com/lganzzzo/lganzzzo/_build?definitionId=9?branchName=master)
 
 Example project how-to create basic CRUD endpoints and document them with Swagger-UI and OpenApi 3.0.0
 
