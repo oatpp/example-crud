@@ -84,10 +84,13 @@ public:
   
   
   ENDPOINT_INFO(putUser) {
+    // general
     info->summary = "Update User by userId";
     info->addConsumes<UserDto::ObjectWrapper>("application/json");
     info->addResponse<UserDto::ObjectWrapper>(Status::CODE_200, "application/json");
     info->addResponse<String>(Status::CODE_404, "text/plain");
+    // params specific
+    info->pathParams["userId"].description = "User Identifier";
   }
   ENDPOINT("PUT", "demo/api/users/{userId}", putUser,
            PATH(Int32, userId),
@@ -98,9 +101,12 @@ public:
   
   
   ENDPOINT_INFO(getUserById) {
+    // general
     info->summary = "Get one User by userId";
     info->addResponse<UserDto::ObjectWrapper>(Status::CODE_200, "application/json");
     info->addResponse<String>(Status::CODE_404, "text/plain");
+    // params specific
+    info->pathParams["userId"].description = "User Identifier";
   }
   ENDPOINT("GET", "demo/api/users/{userId}", getUserById,
            PATH(Int32, userId)) {
@@ -120,9 +126,12 @@ public:
   
   
   ENDPOINT_INFO(deleteUser) {
+    // general
     info->summary = "Delete User by userId";
     info->addResponse<String>(Status::CODE_200, "text/plain");
     info->addResponse<String>(Status::CODE_404, "text/plain");
+    // params specific
+    info->pathParams["userId"].description = "User Identifier";
   }
   ENDPOINT("DELETE", "demo/api/users/{userId}", deleteUser,
            PATH(Int32, userId)) {
