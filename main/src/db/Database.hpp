@@ -21,7 +21,7 @@
  */
 class Database {
 private:
-  oatpp::concurrency::SpinLock::Atom m_atom; ///< Atomic boolean for SpinLock
+  oatpp::concurrency::SpinLock m_lock;
   v_int32 m_idCounter; ///< counter to generate userIds
   std::unordered_map<v_int32, User> m_usersById; ///< Map userId to User
 private:
@@ -30,8 +30,7 @@ private:
 public:
   
   Database()
-    : m_atom(false)
-    , m_idCounter(0)
+    : m_idCounter(0)
   {}
   
   UserDto::ObjectWrapper createUser(const UserDto::ObjectWrapper& userDto);

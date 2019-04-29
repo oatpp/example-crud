@@ -34,7 +34,7 @@ UserDto::ObjectWrapper Database::deserializeToDto(const User& user){
 }
 
 UserDto::ObjectWrapper Database::createUser(const UserDto::ObjectWrapper& userDto){
-  oatpp::concurrency::SpinLock lock(m_atom);
+  std::lock_guard<oatpp::concurrency::SpinLock> lock(m_lock);
   auto user = serializeFromDto(userDto);
   user.id = m_idCounter++;
   m_usersById[user.id] = user;
@@ -42,7 +42,7 @@ UserDto::ObjectWrapper Database::createUser(const UserDto::ObjectWrapper& userDt
 }
 
 UserDto::ObjectWrapper Database::updateUser(const UserDto::ObjectWrapper& userDto){
-  oatpp::concurrency::SpinLock lock(m_atom);
+  std::lock_guard<oatpp::concurrency::SpinLock> lock(m_lock);
   auto user = serializeFromDto(userDto);
   if(user.id < 0){
     throw std::runtime_error("User Id cannot be less than 0");
@@ -57,7 +57,7 @@ UserDto::ObjectWrapper Database::updateUser(const UserDto::ObjectWrapper& userDt
 }
 
 UserDto::ObjectWrapper Database::getUserById(v_int32 id){
-  oatpp::concurrency::SpinLock lock(m_atom);
+  std::lock_guard<oatpp::concurrency::SpinLock> lock(m_lock);
   auto it = m_usersById.find(id);
   if(it == m_usersById.end()){
     return UserDto::ObjectWrapper::empty();
@@ -66,7 +66,7 @@ UserDto::ObjectWrapper Database::getUserById(v_int32 id){
 }
 
 oatpp::data::mapping::type::List<UserDto::ObjectWrapper>::ObjectWrapper Database::getUsers(){
-  oatpp::concurrency::SpinLock lock(m_atom);
+  std::lock_guard<oatpp::concurrency::SpinLock> lock(m_lock);
   auto result = oatpp::data::mapping::type::List<UserDto::ObjectWrapper>::createShared();
   auto it = m_usersById.begin();
   while (it != m_usersById.end()) {
@@ -77,7 +77,7 @@ oatpp::data::mapping::type::List<UserDto::ObjectWrapper>::ObjectWrapper Database
 }
 
 bool Database::deleteUser(v_int32 id){
-  oatpp::concurrency::SpinLock lock(m_atom);
+  std::lock_guard<oatpp::concurrency::SpinLock> lock(m_lock);
   auto it = m_usersById.find(id);
   if(it == m_usersById.end()){
     return false;
