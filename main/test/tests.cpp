@@ -12,15 +12,11 @@ namespace {
 
 class Logger : public oatpp::base::Logger {
 private:
-  oatpp::concurrency::SpinLock::Atom m_atom;
+  oatpp::concurrency::SpinLock m_lock;
 public:
 
-  Logger()
-  : m_atom(false)
-  {}
-
   void log(v_int32 priority, const std::string& tag, const std::string& message) override {
-    oatpp::concurrency::SpinLock lock(m_atom);
+    std::lock_guard<oatpp::concurrency::SpinLock> lock(m_lock);
     std::cout << tag << ":" << message << "\n";
   }
 
