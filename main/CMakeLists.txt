@@ -5,7 +5,6 @@ set(CMAKE_CXX_STANDARD 11)
 
 add_library(crud-lib
         src/AppComponent.hpp
-        src/Logger.hpp
         src/SwaggerComponent.hpp
         src/controller/UserController.hpp
         src/db/Database.cpp
