@@ -44,4 +44,4 @@ add_executable(crud-test
 target_link_libraries(crud-test crud-lib)
 
 enable_testing()
-add_test(project-tests ${project_name}-test)
+add_test(project-tests crud-test)
