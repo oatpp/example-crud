@@ -13,25 +13,19 @@ This project is using `oatpp` and `oatpp-swagger` modules.
 ### Project layout
 
 ```
-
-- CMakeLists.txt          // project loader script. load and build dependencies 
-- main/                   // main project directory
-    |
-    |- CMakeLists.txt     // projects CMakeLists.txt
-    |- src/               // source folder
-    |- test/              // test folder
-
-```
-```
+- CMakeLists.txt                        // projects CMakeLists.txt
 - src/
     |
-    |- controller/              // Folder containing UserController where all endpoints are declared
-    |- db/                      // Folder with database mock
-    |- dto/                     // DTOs are declared here
-    |- SwaggerComponent.hpp     // Swagger-UI config
-    |- AppComponent.hpp         // Service config
-    |- Logger.hpp               // Application Logger
-    |- App.cpp                  // main() is here
+    |- controller/                      // Folder containing UserController where all endpoints are declared
+    |- db/                              // Folder with database mock
+    |- dto/                             // DTOs are declared here
+    |- SwaggerComponent.hpp             // Swagger-UI config
+    |- AppComponent.hpp                 // Service config
+    |- Logger.hpp                       // Application Logger
+    |- App.cpp                          // main() is here
+
+- test/                                 // test folder
+- utility/install-oatpp-modules.sh      // utility script to install required oatpp-modules.
     
 ```
 
@@ -41,11 +35,16 @@ This project is using `oatpp` and `oatpp-swagger` modules.
 
 #### Using CMake
 
+**Requires**
+
+- `oatpp` and `oatpp-swagger` modules installed. You may run `utility/install-oatpp-modules.sh` 
+script to install required oatpp modules.
+
 ```
 $ mkdir build && cd build
 $ cmake ..
-$ make run        ## Download, build, and install all dependencies. Run project
-
+$ make 
+$ ./crud-exe        # - run application.
 ```
 
 #### In Docker

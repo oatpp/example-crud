@@ -1,42 +1,47 @@
 cmake_minimum_required(VERSION 3.1)
-project(project-loader)
+project(crud)
 
-include(ExternalProject)
+set(CMAKE_CXX_STANDARD 11)
 
-#############################################################################
-## load all dependencies
-
-ExternalProject_Add(oatpp
-        GIT_REPOSITORY "https://github.com/oatpp/oatpp.git"
-        GIT_TAG origin/master
-        CMAKE_ARGS -DOATPP_BUILD_TESTS=OFF
+add_library(crud-lib
+        src/AppComponent.hpp
+        src/SwaggerComponent.hpp
+        src/controller/UserController.hpp
+        src/db/Database.cpp
+        src/db/Database.hpp
+        src/db/model/User.hpp
+        src/dto/UserDto.hpp
 )
 
-ExternalProject_Add(oatpp_swagger
-        GIT_REPOSITORY "https://github.com/oatpp/oatpp-swagger.git"
-        GIT_TAG origin/master
-        DEPENDS oatpp
+## include directories
+
+target_include_directories(crud-lib PUBLIC src)
+
+
+## link libs
+
+find_package(oatpp          0.19.4 REQUIRED)
+find_package(oatpp-swagger  0.19.4 REQUIRED)
+
+target_link_libraries(crud-lib
+        PUBLIC oatpp::oatpp
+        PUBLIC oatpp::oatpp-swagger
 )
 
-ExternalProject_Add(main
-        SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/main
-        INSTALL_COMMAND cmake -E echo "SKIP INSTALL"
-        DEPENDS oatpp oatpp_swagger
+## define path to swagger-ui res folder
+
+add_definitions(-DOATPP_SWAGGER_RES_PATH="${oatpp-swagger_INCLUDE_DIRS}/../bin/oatpp-swagger/res")
+
+
+## add executables
+
+add_executable(crud-exe src/App.cpp)
+target_link_libraries(crud-exe crud-lib)
+
+add_executable(crud-test
+        test/tests.cpp
 )
-
-#############################################################################
-## make run command
-
-ExternalProject_Get_Property(main BINARY_DIR)
-
-add_custom_target(run
-        COMMAND ${BINARY_DIR}/crud-exe
-        DEPENDS main
-        WORKING_DIRECTORY ${BINARY_DIR}
-)
-
-#############################################################################
-## make test command
+target_link_libraries(crud-test crud-lib)
 
 enable_testing()
-add_test(all-tests ${BINARY_DIR}/crud-test)
+add_test(project-tests ${project_name}-test)
