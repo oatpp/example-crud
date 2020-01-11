@@ -20,8 +20,8 @@ target_include_directories(crud-lib PUBLIC src)
 
 ## link libs
 
-find_package(oatpp          0.19.11 REQUIRED)
-find_package(oatpp-swagger  0.19.11 REQUIRED)
+find_package(oatpp          0.19.12 REQUIRED)
+find_package(oatpp-swagger  0.19.12 REQUIRED)
 
 target_link_libraries(crud-lib
         PUBLIC oatpp::oatpp
