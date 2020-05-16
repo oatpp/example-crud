@@ -1,10 +1,3 @@
-//
-//  User.hpp
-//  crud
-//
-//  Created by Leonid on 3/13/18.
-//  Copyright © 2018 oatpp. All rights reserved.
-//
 
 #ifndef db_User_hpp
 #define db_User_hpp

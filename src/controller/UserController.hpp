@@ -1,10 +1,3 @@
-//
-//  UserController.hpp
-//  web-starter-project
-//
-//  Created by Leonid on 2/12/18.
-//  Copyright © 2018 oatpp. All rights reserved.
-//
 
 #ifndef UserController_hpp
 #define UserController_hpp
