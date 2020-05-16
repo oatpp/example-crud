@@ -1,10 +1,3 @@
-//
-//  main.cpp
-//  web-starter-project
-//
-//  Created by Leonid on 2/12/18.
-//  Copyright © 2018 oatpp. All rights reserved.
-//
 
 #include "./controller/UserController.hpp"
 #include "./AppComponent.hpp"

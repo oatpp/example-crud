@@ -1,23 +1,17 @@
-//
-//  Database.cpp
-//  crud
-//
-//  Created by Leonid on 3/13/18.
-//  Copyright © 2018 oatpp. All rights reserved.
-//
 
 #include "Database.hpp"
 
 User Database::serializeFromDto(const UserDto::ObjectWrapper& userDto){
   User user;
   if(userDto->id){
-    user.id = userDto->id->getValue();
+    user.id = *userDto->id;
   }
   user.firstName = userDto->firstName;
   user.lastName = userDto->lastName;
-  userDto->friends->forEach([&user](const oatpp::String& friendId){
-    user.friends.push_back(friendId);
-  });
+
+  for(auto& id : *userDto->friends) {
+    user.friends.push_back(id);
+  }
   return user;
 }
 
@@ -28,7 +22,7 @@ UserDto::ObjectWrapper Database::deserializeToDto(const User& user){
   dto->lastName = user.lastName;
   auto it = user.friends.begin();
   while (it != user.friends.end()) {
-    dto->friends->pushBack(*it++);
+    dto->friends->push_back(*it++);
   }
   return dto;
 }
@@ -70,7 +64,7 @@ oatpp::data::mapping::type::List<UserDto::ObjectWrapper>::ObjectWrapper Database
   auto result = oatpp::data::mapping::type::List<UserDto::ObjectWrapper>::createShared();
   auto it = m_usersById.begin();
   while (it != m_usersById.end()) {
-    result->pushBack(deserializeToDto(it->second));
+    result->push_back(deserializeToDto(it->second));
     it++;
   }
   return result;

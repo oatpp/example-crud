@@ -1,10 +1,3 @@
-//
-//  UserController.hpp
-//  web-starter-project
-//
-//  Created by Leonid on 2/12/18.
-//  Copyright © 2018 oatpp. All rights reserved.
-//
 
 #ifndef UserController_hpp
 #define UserController_hpp
@@ -54,7 +47,7 @@ public:
   
   ENDPOINT_INFO(root) {
     info->summary = "Index.html page";
-    info->addResponse<UserDto::ObjectWrapper>(Status::CODE_200, "text/html");
+    info->addResponse<String>(Status::CODE_200, "text/html");
   }
   ENDPOINT("GET", "/", root) {
     const char* html =
@@ -74,11 +67,11 @@ public:
   
   ENDPOINT_INFO(createUser) {
     info->summary = "Create new User";
-    info->addConsumes<UserDto::ObjectWrapper>("application/json");
-    info->addResponse<UserDto::ObjectWrapper>(Status::CODE_200, "application/json");
+    info->addConsumes<UserDto>("application/json");
+    info->addResponse<UserDto>(Status::CODE_200, "application/json");
   }
   ENDPOINT("POST", "demo/api/users", createUser,
-           BODY_DTO(UserDto::ObjectWrapper, userDto)) {
+           BODY_DTO(UserDto, userDto)) {
     return createDtoResponse(Status::CODE_200, m_database->createUser(userDto));
   }
   
@@ -86,15 +79,15 @@ public:
   ENDPOINT_INFO(putUser) {
     // general
     info->summary = "Update User by userId";
-    info->addConsumes<UserDto::ObjectWrapper>("application/json");
-    info->addResponse<UserDto::ObjectWrapper>(Status::CODE_200, "application/json");
+    info->addConsumes<UserDto>("application/json");
+    info->addResponse<UserDto>(Status::CODE_200, "application/json");
     info->addResponse<String>(Status::CODE_404, "text/plain");
     // params specific
     info->pathParams["userId"].description = "User Identifier";
   }
   ENDPOINT("PUT", "demo/api/users/{userId}", putUser,
            PATH(Int32, userId),
-           BODY_DTO(UserDto::ObjectWrapper, userDto)) {
+           BODY_DTO(UserDto, userDto)) {
     userDto->id = userId;
     return createDtoResponse(Status::CODE_200, m_database->updateUser(userDto));
   }
@@ -103,7 +96,7 @@ public:
   ENDPOINT_INFO(getUserById) {
     // general
     info->summary = "Get one User by userId";
-    info->addResponse<UserDto::ObjectWrapper>(Status::CODE_200, "application/json");
+    info->addResponse<UserDto>(Status::CODE_200, "application/json");
     info->addResponse<String>(Status::CODE_404, "text/plain");
     // params specific
     info->pathParams["userId"].description = "User Identifier";
@@ -118,7 +111,7 @@ public:
   
   ENDPOINT_INFO(getUsers) {
     info->summary = "get all stored users";
-    info->addResponse<List<UserDto::ObjectWrapper>::ObjectWrapper>(Status::CODE_200, "application/json");
+    info->addResponse<List<UserDto>>(Status::CODE_200, "application/json");
   }
   ENDPOINT("GET", "demo/api/users", getUsers) {
     return createDtoResponse(Status::CODE_200, m_database->getUsers());

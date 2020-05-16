@@ -1,10 +1,3 @@
-//
-//  AppComponent.hpp
-//  oatpp-web-starter
-//
-//  Created by Leonid on 3/2/18.
-//  Copyright © 2018 lganzzzo. All rights reserved.
-//
 
 #ifndef AppComponent_hpp
 #define AppComponent_hpp
@@ -60,10 +53,8 @@ public:
    *  Create ObjectMapper component to serialize/deserialize DTOs in Contoller's API
    */
   OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>, apiObjectMapper)([] {
-    auto serializerConfig = oatpp::parser::json::mapping::Serializer::Config::createShared();
-    auto deserializerConfig = oatpp::parser::json::mapping::Deserializer::Config::createShared();
-    deserializerConfig->allowUnknownFields = false;
-    auto objectMapper = oatpp::parser::json::mapping::ObjectMapper::createShared(serializerConfig, deserializerConfig);
+    auto objectMapper = oatpp::parser::json::mapping::ObjectMapper::createShared();
+    objectMapper->getDeserializer()->getConfig()->allowUnknownFields = false;
     return objectMapper;
   }());
   

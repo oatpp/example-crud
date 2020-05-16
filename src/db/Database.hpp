@@ -1,10 +1,3 @@
-//
-//  Database.hpp
-//  crud
-//
-//  Created by Leonid on 3/13/18.
-//  Copyright © 2018 oatpp. All rights reserved.
-//
 
 #ifndef Database_hpp
 #define Database_hpp

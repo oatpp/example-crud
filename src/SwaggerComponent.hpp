@@ -1,10 +1,3 @@
-//
-//  SwaggerComponent.hpp
-//  crud
-//
-//  Created by Leonid on 7/31/18.
-//  Copyright © 2018 oatpp. All rights reserved.
-//
 
 #ifndef SwaggerComponent_hpp
 #define SwaggerComponent_hpp
