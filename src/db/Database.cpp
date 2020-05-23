@@ -1,7 +1,7 @@
 
 #include "Database.hpp"
 
-User Database::serializeFromDto(const UserDto::ObjectWrapper& userDto){
+User Database::serializeFromDto(const oatpp::Object<UserDto>& userDto){
   User user;
   if(userDto->id){
     user.id = *userDto->id;
@@ -15,7 +15,7 @@ User Database::serializeFromDto(const UserDto::ObjectWrapper& userDto){
   return user;
 }
 
-UserDto::ObjectWrapper Database::deserializeToDto(const User& user){
+oatpp::Object<UserDto> Database::deserializeToDto(const User& user){
   auto dto = UserDto::createShared();
   dto->id = user.id;
   dto->firstName = user.firstName;
@@ -27,7 +27,7 @@ UserDto::ObjectWrapper Database::deserializeToDto(const User& user){
   return dto;
 }
 
-UserDto::ObjectWrapper Database::createUser(const UserDto::ObjectWrapper& userDto){
+oatpp::Object<UserDto> Database::createUser(const oatpp::Object<UserDto>& userDto){
   std::lock_guard<oatpp::concurrency::SpinLock> lock(m_lock);
   auto user = serializeFromDto(userDto);
   user.id = m_idCounter++;
@@ -35,7 +35,7 @@ UserDto::ObjectWrapper Database::createUser(const UserDto::ObjectWrapper& userDt
   return deserializeToDto(user);
 }
 
-UserDto::ObjectWrapper Database::updateUser(const UserDto::ObjectWrapper& userDto){
+oatpp::Object<UserDto> Database::updateUser(const oatpp::Object<UserDto>& userDto){
   std::lock_guard<oatpp::concurrency::SpinLock> lock(m_lock);
   auto user = serializeFromDto(userDto);
   if(user.id < 0){
@@ -50,7 +50,7 @@ UserDto::ObjectWrapper Database::updateUser(const UserDto::ObjectWrapper& userDt
   return deserializeToDto(user);
 }
 
-UserDto::ObjectWrapper Database::getUserById(v_int32 id){
+oatpp::Object<UserDto> Database::getUserById(v_int32 id){
   std::lock_guard<oatpp::concurrency::SpinLock> lock(m_lock);
   auto it = m_usersById.find(id);
   if(it == m_usersById.end()){
@@ -59,9 +59,9 @@ UserDto::ObjectWrapper Database::getUserById(v_int32 id){
   return deserializeToDto(it->second);
 }
 
-oatpp::data::mapping::type::List<UserDto::ObjectWrapper>::ObjectWrapper Database::getUsers(){
+oatpp::List<oatpp::Object<UserDto>> Database::getUsers(){
   std::lock_guard<oatpp::concurrency::SpinLock> lock(m_lock);
-  auto result = oatpp::data::mapping::type::List<UserDto::ObjectWrapper>::createShared();
+  oatpp::List<oatpp::Object<UserDto>> result({});
   auto it = m_usersById.begin();
   while (it != m_usersById.end()) {
     result->push_back(deserializeToDto(it->second));
