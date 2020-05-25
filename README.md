@@ -63,11 +63,11 @@ $ docker run -p 8000:8000 -t example-crud
 ```c++
 ENDPOINT_INFO(createUser) {
   info->summary = "Create new User";
-  info->addConsumes<UserDto>("application/json");
-  info->addResponse<UserDto>(Status::CODE_200, "application/json");
+  info->addConsumes<Object<UserDto>>("application/json");
+  info->addResponse<Object<UserDto>>(Status::CODE_200, "application/json");
 }
 ENDPOINT("POST", "demo/api/users", createUser,
-         BODY_DTO(UserDto, userDto)) {
+         BODY_DTO(Object<UserDto>, userDto)) {
   return createDtoResponse(Status::CODE_200, m_database->createUser(userDto));
 }
 ```
@@ -77,13 +77,13 @@ ENDPOINT("POST", "demo/api/users", createUser,
 ```c++
 ENDPOINT_INFO(putUser) {
   info->summary = "Update User by userId";
-  info->addConsumes<UserDto>("application/json");
-  info->addResponse<UserDto>(Status::CODE_200, "application/json");
+  info->addConsumes<Object<UserDto>>("application/json");
+  info->addResponse<Object<UserDto>>(Status::CODE_200, "application/json");
   info->addResponse<String>(Status::CODE_404, "text/plain");
 }
 ENDPOINT("PUT", "demo/api/users/{userId}", putUser,
          PATH(Int32, userId),
-         BODY_DTO(UserDto, userDto)) {
+         BODY_DTO(Object<UserDto>, userDto)) {
   userDto->id = userId;
   return createDtoResponse(Status::CODE_200, m_database->updateUser(userDto));
 }
@@ -94,7 +94,7 @@ ENDPOINT("PUT", "demo/api/users/{userId}", putUser,
 ```c++
 ENDPOINT_INFO(getUserById) {
   info->summary = "Get one User by userId";
-  info->addResponse<UserDto>(Status::CODE_200, "application/json");
+  info->addResponse<Object<UserDto>>(Status::CODE_200, "application/json");
   info->addResponse<String>(Status::CODE_404, "text/plain");
 }
 ENDPOINT("GET", "demo/api/users/{userId}", getUserById,
@@ -110,7 +110,7 @@ ENDPOINT("GET", "demo/api/users/{userId}", getUserById,
 ```c++
 ENDPOINT_INFO(getUsers) {
   info->summary = "get all stored users";
-  info->addResponse<List<UserDto>>(Status::CODE_200, "application/json");
+  info->addResponse<List<Object<UserDto>>>(Status::CODE_200, "application/json");
 }
 ENDPOINT("GET", "demo/api/users", getUsers) {
   return createDtoResponse(Status::CODE_200, m_database->getUsers());
