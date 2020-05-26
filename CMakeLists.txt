@@ -30,7 +30,7 @@ target_link_libraries(crud-lib
 
 ## define path to swagger-ui res folder
 
-add_definitions(-DOATPP_SWAGGER_RES_PATH="${oatpp-swagger_INCLUDE_DIRS}/../bin/oatpp-swagger/res")
+add_definitions(-DOATPP_SWAGGER_RES_PATH="${OATPP_BASE_DIR}/bin/oatpp-swagger/res")
 
 
 ## add executables
