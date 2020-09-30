@@ -3,7 +3,7 @@
 #include "./AppComponent.hpp"
 
 #include "oatpp-swagger/Controller.hpp"
-#include "oatpp/network/server/Server.hpp"
+#include "oatpp/network/Server.hpp"
 
 #include <iostream>
 
@@ -32,8 +32,8 @@ void run() {
   
   /* create server */
   
-  oatpp::network::server::Server server(components.serverConnectionProvider.getObject(),
-                                        components.serverConnectionHandler.getObject());
+  oatpp::network::Server server(components.serverConnectionProvider.getObject(),
+                                components.serverConnectionHandler.getObject());
   
   OATPP_LOGD("Server", "Running on port %s...", components.serverConnectionProvider.getObject()->getProperty("port").toString()->c_str());
   
