@@ -6,19 +6,21 @@
 
 #include OATPP_CODEGEN_BEGIN(DTO)
 
-/**
- *  Data Transfer Object. Object containing fields only.
- *  Used in API for serialization/deserialization and validation
- */
+ENUM(Role, v_int32,
+     VALUE(GUEST, 0, "ROLE_GUEST"),
+     VALUE(ADMIN, 1, "ROLE_ADMIN")
+)
+
 class UserDto : public oatpp::DTO {
   
   DTO_INIT(UserDto, DTO)
-  
+
   DTO_FIELD(Int32, id);
-  DTO_FIELD(String, firstName, "first-name");
-  DTO_FIELD(String, lastName, "last-name");
-  DTO_FIELD(Vector<String>, friends) = Vector<String>({});
-  
+  DTO_FIELD(String, userName, "username");
+  DTO_FIELD(String, email, "email");
+  DTO_FIELD(String, password, "password");
+  DTO_FIELD(Enum<Role>::AsString, role, "role");
+
 };
 
 #include OATPP_CODEGEN_END(DTO)

@@ -1,18 +1,15 @@
 
-#include "./controller/UserController.hpp"
-#include "./AppComponent.hpp"
+#include "AppComponent.hpp"
+
+#include "controller/UserController.hpp"
+#include "controller/StaticController.hpp"
 
 #include "oatpp-swagger/Controller.hpp"
+
 #include "oatpp/network/Server.hpp"
 
 #include <iostream>
 
-/**
- *  run() method.
- *  1) set Environment components.
- *  2) add ApiController's endpoints to router
- *  3) run server
- */
 void run() {
   
   AppComponent components; // Create scope Environment components
@@ -29,6 +26,9 @@ void run() {
   
   auto swaggerController = oatpp::swagger::Controller::createShared(docEndpoints);
   swaggerController->addEndpointsToRouter(router);
+
+  auto staticController = StaticController::createShared();
+  staticController->addEndpointsToRouter(router);
   
   /* create server */
   
