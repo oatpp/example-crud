@@ -23,7 +23,7 @@ jobs:
         displayName: 'Checkout - oatpp'
         workingDirectory: build
       - script: |
-          cmake ..
+          cmake -DOATPP_BUILD_TESTS=OFF ..
           sudo make install
         displayName: 'Build - oatpp'
         workingDirectory: build/oatpp/build
@@ -31,7 +31,7 @@ jobs:
       ## Build oatpp-sqlite
       - script: |
           git clone https://github.com/oatpp/oatpp-sqlite
-          mkdir -p oatpp/build
+          mkdir -p oatpp-sqlite/build
         displayName: 'Checkout - oatpp-sqlite'
         workingDirectory: build
       - script: |
@@ -43,7 +43,7 @@ jobs:
       ## Build oatpp-swagger
       - script: |
           git clone https://github.com/oatpp/oatpp-swagger
-          mkdir -p oatpp/build
+          mkdir -p oatpp-swagger/build
         displayName: 'Checkout - oatpp-swagger'
         workingDirectory: build
       - script: |
