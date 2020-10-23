@@ -9,23 +9,56 @@ jobs:
     continueOnError: false
     pool:
       vmImage: 'Ubuntu 16.04'
-    container:
-      image: lganzzzo/ubuntu-cmake:latest
     workspace:
       clean: all
     steps:
       - script: |
-          sudo /bin/bash ./install-oatpp-modules.sh
-        displayName: 'install oatpp modules'
-        workingDirectory: utility
-      - script: |
           mkdir build
+
+      #######################################################################################
+      ## Build oatpp
+      - script: |
+          git clone https://github.com/oatpp/oatpp
+          mkdir -p oatpp/build
+        displayName: 'Checkout - oatpp'
+        workingDirectory: build
+      - script: |
+          cmake ..
+          sudo make install
+        displayName: 'Build - oatpp'
+        workingDirectory: build/oatpp/build
+      #######################################################################################
+      ## Build oatpp-sqlite
+      - script: |
+          git clone https://github.com/oatpp/oatpp-sqlite
+          mkdir -p oatpp/build
+        displayName: 'Checkout - oatpp-sqlite'
+        workingDirectory: build
+      - script: |
+          cmake -DOATPP_SQLITE_AMALGAMATION=ON ..
+          sudo make install
+        displayName: 'Build - oatpp-sqlite'
+        workingDirectory: build/oatpp-sqlite/build
+      #######################################################################################
+      ## Build oatpp-swagger
+      - script: |
+          git clone https://github.com/oatpp/oatpp-swagger
+          mkdir -p oatpp/build
+        displayName: 'Checkout - oatpp-swagger'
+        workingDirectory: build
+      - script: |
+          cmake ..
+          sudo make install
+        displayName: 'Build - oatpp-swagger'
+        workingDirectory: build/oatpp-swagger/build
+      #######################################################################################
+      ## Build Project
       - script: |
           cmake ..
           sudo make
-        displayName: 'CMake'
+          displayName: 'CMake'
         workingDirectory: build
       - script: |
           make test ARGS="-V"
-        displayName: 'Test'
-        workingDirectory: build
+      displayName: 'Test'
+      workingDirectory: build
