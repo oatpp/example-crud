@@ -60,5 +60,5 @@ jobs:
         workingDirectory: build
       - script: |
           make test ARGS="-V"
-      displayName: 'Test'
-      workingDirectory: build
+        displayName: 'Test'
+        workingDirectory: build
