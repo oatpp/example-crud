@@ -27,6 +27,7 @@ jobs:
           sudo make install
         displayName: 'Build - oatpp'
         workingDirectory: build/oatpp/build
+
       #######################################################################################
       ## Build oatpp-sqlite
       - script: |
@@ -39,6 +40,7 @@ jobs:
           sudo make install
         displayName: 'Build - oatpp-sqlite'
         workingDirectory: build/oatpp-sqlite/build
+
       #######################################################################################
       ## Build oatpp-swagger
       - script: |
@@ -51,6 +53,69 @@ jobs:
           sudo make install
         displayName: 'Build - oatpp-swagger'
         workingDirectory: build/oatpp-swagger/build
+
+      #######################################################################################
+      ## Build Project
+      - script: |
+          cmake ..
+          sudo make
+        displayName: 'CMake'
+        workingDirectory: build
+      - script: |
+          make test ARGS="-V"
+        displayName: 'Test'
+        workingDirectory: build
+
+  - job: ubuntu_16_04
+    displayName: 'Build - macOS'
+    continueOnError: false
+    pool:
+      vmImage: 'macOS-10.14'
+    workspace:
+      clean: all
+    steps:
+      - script: |
+          mkdir build
+
+      #######################################################################################
+      ## Build oatpp
+      - script: |
+          git clone https://github.com/oatpp/oatpp
+          mkdir -p oatpp/build
+        displayName: 'Checkout - oatpp'
+        workingDirectory: build
+      - script: |
+          cmake -DOATPP_BUILD_TESTS=OFF ..
+          sudo make install
+        displayName: 'Build - oatpp'
+        workingDirectory: build/oatpp/build
+
+      #######################################################################################
+      ## Build oatpp-sqlite
+      - script: |
+          git clone https://github.com/oatpp/oatpp-sqlite
+          mkdir -p oatpp-sqlite/build
+        displayName: 'Checkout - oatpp-sqlite'
+        workingDirectory: build
+      - script: |
+          cmake -DOATPP_SQLITE_AMALGAMATION=ON ..
+          sudo make install
+        displayName: 'Build - oatpp-sqlite'
+        workingDirectory: build/oatpp-sqlite/build
+
+      #######################################################################################
+      ## Build oatpp-swagger
+      - script: |
+          git clone https://github.com/oatpp/oatpp-swagger
+          mkdir -p oatpp-swagger/build
+        displayName: 'Checkout - oatpp-swagger'
+        workingDirectory: build
+      - script: |
+          cmake ..
+          sudo make install
+        displayName: 'Build - oatpp-swagger'
+        workingDirectory: build/oatpp-swagger/build
+
       #######################################################################################
       ## Build Project
       - script: |
