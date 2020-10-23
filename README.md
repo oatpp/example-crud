@@ -48,10 +48,15 @@ This project is using the following oatpp modules:
 
 #### Using CMake
 
-**Requires**
+##### Pre Requirements
 
-- `oatpp`, `oatpp-swagger` and `oatpp-sqlite` modules installed. You may run `utility/install-oatpp-modules.sh` 
-script to install required oatpp modules.
+- `oatpp` 
+- `oatpp-swagger`
+- `oatpp-sqlite` with `-DOATPP_SQLITE_AMALGAMATION=ON` cmake flag.
+
+**Note:** You may run `utility/install-oatpp-modules.sh` script to install required oatpp modules.
+
+##### Build Project
 
 ```
 $ mkdir build && cd build
