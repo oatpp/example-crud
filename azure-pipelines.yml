@@ -188,4 +188,4 @@ jobs:
       - script: |
           crud-test.exe
         displayName: 'Test'
-        workingDirectory: build
+        workingDirectory: build\Debug
