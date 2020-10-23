@@ -56,7 +56,7 @@ jobs:
       - script: |
           cmake ..
           sudo make
-          displayName: 'CMake'
+        displayName: 'CMake'
         workingDirectory: build
       - script: |
           make test ARGS="-V"
