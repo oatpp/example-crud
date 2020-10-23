@@ -8,13 +8,15 @@ add_library(crud-lib
         src/controller/UserController.hpp
         src/db/UserDb.hpp
         src/dto/PageDto.hpp
+        src/dto/StatusDto.hpp
         src/dto/UserDto.hpp
         src/service/UserService.cpp
         src/service/UserService.hpp
         src/AppComponent.hpp
         src/DatabaseComponent.hpp
         src/SwaggerComponent.hpp
-        src/ErrorHandler.cpp src/ErrorHandler.hpp src/dto/StatusDto.hpp)
+        src/ErrorHandler.cpp
+        src/ErrorHandler.hpp)
 
 ## include directories
 
