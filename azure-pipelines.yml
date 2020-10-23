@@ -66,7 +66,7 @@ jobs:
         displayName: 'Test'
         workingDirectory: build
 
-  - job: ubuntu_16_04
+  - job: macOS
     displayName: 'Build - macOS'
     continueOnError: false
     pool:
@@ -125,5 +125,67 @@ jobs:
         workingDirectory: build
       - script: |
           make test ARGS="-V"
+        displayName: 'Test'
+        workingDirectory: build
+
+  - job: windows
+    displayName: 'Build - Windows'
+    continueOnError: false
+    pool:
+      vmImage: 'windows-latest'
+    workspace:
+      clean: all
+    steps:
+      - script: |
+          MD build
+
+      #######################################################################################
+      ## Build oatpp
+      - script: |
+          git clone https://github.com/oatpp/oatpp
+          MD oatpp\build
+        displayName: 'Checkout - oatpp'
+        workingDirectory: build
+      - script: |
+          cmake -DOATPP_BUILD_TESTS=OFF ..
+          cmake --build . --target INSTALL
+        displayName: 'Build - oatpp'
+        workingDirectory: build\oatpp\build
+
+      #######################################################################################
+      ## Build oatpp-sqlite
+      - script: |
+          git clone https://github.com/oatpp/oatpp-sqlite
+          MD oatpp-sqlite\build
+        displayName: 'Checkout - oatpp-sqlite'
+        workingDirectory: build
+      - script: |
+          cmake -DOATPP_SQLITE_AMALGAMATION=ON ..
+          cmake --build . --target INSTALL
+        displayName: 'Build - oatpp-sqlite'
+        workingDirectory: build\oatpp-sqlite\build
+
+      #######################################################################################
+      ## Build oatpp-swagger
+      - script: |
+          git clone https://github.com/oatpp/oatpp-swagger
+          MD oatpp-swagger\build
+        displayName: 'Checkout - oatpp-swagger'
+        workingDirectory: build
+      - script: |
+          cmake ..
+          cmake --build . --target INSTALL
+        displayName: 'Build - oatpp-swagger'
+        workingDirectory: build\oatpp-swagger\build
+
+      #######################################################################################
+      ## Build Project
+      - script: |
+          cmake ..
+          cmake --build .
+        displayName: 'CMake'
+        workingDirectory: build
+      - script: |
+          crud-test.exe
         displayName: 'Test'
         workingDirectory: build
