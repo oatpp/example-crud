@@ -72,11 +72,11 @@ void test() {
   doc_endpoints->pushBackAll(user_controller->getEndpoints());
 
   // swagger_controller
-  auto generator_config =
-    oatpp::base::Environment::Component<
-      std::shared_ptr<
-        oatpp::swagger::Generator::Config>>(
-      std::make_shared<oatpp::swagger::Generator::Config>());
+//  auto generator_config =
+//    oatpp::base::Environment::Component<
+//      std::shared_ptr<
+//        oatpp::swagger::Generator::Config>>(
+//      std::make_shared<oatpp::swagger::Generator::Config>());
 
   auto swagger_controller = oatpp::swagger::Controller::createShared(doc_endpoints, swaggerDocInfo);
   swagger_controller->addEndpointsToRouter(http_router);
