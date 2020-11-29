@@ -53,7 +53,7 @@ endif()
 
 ## add executables
 
-add_executable(crud-exe src/App.cpp src/db/UserDb.hpp)
+add_executable(crud-exe src/App.cpp)
 target_link_libraries(crud-exe crud-lib)
 
 add_executable(crud-test
