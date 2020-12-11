@@ -34,7 +34,7 @@ public:
     info->addConsumes<Object<UserDto>>("application/json");
 
     info->addResponse<Object<UserDto>>(Status::CODE_200, "application/json");
-    info->addResponse<Object<StatusDto>>(Status::CODE_500, "application/json");
+    info->addResponse<Object<StatusDto>>(Status::CODE_404, "application/json");
     info->addResponse<Object<StatusDto>>(Status::CODE_500, "application/json");
   }
   ENDPOINT("POST", "users", createUser,
