@@ -15,7 +15,7 @@
  */
 class UserController : public oatpp::web::server::api::ApiController {
 public:
-  UserController(const std::shared_ptr<ObjectMapper>& objectMapper)
+  UserController(OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper))
     : oatpp::web::server::api::ApiController(objectMapper)
   {}
 private:

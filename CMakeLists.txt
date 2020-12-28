@@ -51,8 +51,10 @@ add_definitions(
         ## define path to swagger-ui static resources folder
         -DOATPP_SWAGGER_RES_PATH="${oatpp-swagger_INCLUDE_DIRS}/../bin/oatpp-swagger/res"
 
-        ## SQLite databse file
+        ## SQLite database file
         -DDATABASE_FILE="${CMAKE_CURRENT_SOURCE_DIR}/db.sqlite"
+        ## SQLite database test file
+        -DTESTDATABASE_FILE="${CMAKE_CURRENT_SOURCE_DIR}/test-db.sqlite"
 
         ## Path to database migration scripts
         -DDATABASE_MIGRATIONS="${CMAKE_CURRENT_SOURCE_DIR}/sql"
@@ -70,7 +72,11 @@ target_link_libraries(crud-exe crud-lib)
 
 add_executable(crud-test
         test/tests.cpp
-)
+        test/app/DatabaseTestClient.hpp 
+        test/app/TestDatabaseComponent.hpp
+        test/app/TestComponent.hpp 
+        test/DatabaseTest.hpp 
+        test/DatabaseTest.cpp)
 target_link_libraries(crud-test crud-lib)
 
 enable_testing()
