@@ -76,4 +76,8 @@ void UserControllerTest::onRun() {
   /* wait all server threads finished */
   std::this_thread::sleep_for(std::chrono::seconds(1));
 
+  /* stop db connection pool */
+  OATPP_COMPONENT(std::shared_ptr<oatpp::provider::Provider<oatpp::sqlite::Connection>>, dbConnectionProvider);
+  dbConnectionProvider->stop();
+
 }
