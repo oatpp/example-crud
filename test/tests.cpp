@@ -6,6 +6,8 @@
 
 #include "oatpp-swagger/oas3/Model.hpp"
 
+#include "DatabaseTest.hpp"
+
 #include <iostream>
 
 namespace {
@@ -25,7 +27,7 @@ void runTests() {
   OATPP_LOGD("test", "insert oatpp-swagger tests here");
 
   OATPP_RUN_TEST(Test);
-
+  OATPP_RUN_TEST(DatabaseTest);
 }
 
 }
