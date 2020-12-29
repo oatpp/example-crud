@@ -29,15 +29,24 @@ void run() {
 
   auto staticController = StaticController::createShared();
   staticController->addEndpointsToRouter(router);
-  
+
+  /* Get connection handler component */
+  OATPP_COMPONENT(std::shared_ptr<oatpp::network::ConnectionHandler>, connectionHandler);
+
+  /* Get connection provider component */
+  OATPP_COMPONENT(std::shared_ptr<oatpp::network::ServerConnectionProvider>, connectionProvider);
+
   /* create server */
+  oatpp::network::Server server(connectionProvider,
+                                connectionHandler);
   
-  oatpp::network::Server server(components.serverConnectionProvider.getObject(),
-                                components.serverConnectionHandler.getObject());
-  
-  OATPP_LOGD("Server", "Running on port %s...", components.serverConnectionProvider.getObject()->getProperty("port").toString()->c_str());
+  OATPP_LOGD("Server", "Running on port %s...", connectionProvider->getProperty("port").toString()->c_str());
   
   server.run();
+
+  /* stop db connection pool */
+  OATPP_COMPONENT(std::shared_ptr<oatpp::provider::Provider<oatpp::sqlite::Connection>>, dbConnectionProvider);
+  dbConnectionProvider->stop();
   
 }
 
