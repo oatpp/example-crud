@@ -8,8 +8,6 @@ oatpp::Object<UserDto> UserService::createUser(const oatpp::Object<UserDto>& dto
 
   auto userId = oatpp::sqlite::Utils::getLastInsertRowId(dbResult->getConnection());
 
-  OATPP_LOGD("AAA", "new userId=%d", userId);
-
   return getUserById((v_int32) userId);
 
 }

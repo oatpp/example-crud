@@ -8,7 +8,14 @@
 #include "app/TestClient.hpp"
 #include "app/TestComponent.hpp"
 
+#include <cstdio>
+
 void UserControllerTest::onRun() {
+
+  /* Remove test database file before running the test */
+  OATPP_LOGI(TAG, "DB-File='%s'", TESTDATABASE_FILE);
+  std::remove(TESTDATABASE_FILE);
+
   /* Register test components */
   TestComponent component;
 
