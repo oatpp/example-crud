@@ -72,11 +72,11 @@ target_link_libraries(crud-exe crud-lib)
 
 add_executable(crud-test
         test/tests.cpp
-        test/app/DatabaseTestClient.hpp 
+        test/app/TestClient.hpp
         test/app/TestDatabaseComponent.hpp
-        test/app/TestComponent.hpp 
-        test/DatabaseTest.hpp 
-        test/DatabaseTest.cpp)
+        test/app/TestComponent.hpp
+        test/UserControllerTest.hpp
+        test/UserControllerTest.cpp)
 target_link_libraries(crud-test crud-lib)
 
 enable_testing()
