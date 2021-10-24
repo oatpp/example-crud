@@ -20,7 +20,7 @@ oatpp::Object<UserDto> UserService::updateUser(const oatpp::Object<UserDto>& dto
 
 }
 
-oatpp::Object<UserDto> UserService::getUserById(const oatpp::Int32& id, const std::shared_ptr<oatpp::orm::Connection>& connection) {
+oatpp::Object<UserDto> UserService::getUserById(const oatpp::Int32& id, const oatpp::provider::ResourceHandle<oatpp::orm::Connection>& connection) {
 
   auto dbResult = m_database->getUserById(id, connection);
   OATPP_ASSERT_HTTP(dbResult->isSuccess(), Status::CODE_500, dbResult->getErrorMessage());

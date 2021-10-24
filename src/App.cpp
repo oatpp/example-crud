@@ -14,21 +14,15 @@ void run() {
   
   AppComponent components; // Create scope Environment components
   
-  /* create ApiControllers and add endpoints to router */
-  
-  auto router = components.httpRouter.getObject();
-  auto docEndpoints = oatpp::swagger::Controller::Endpoints::createShared();
-  
-  auto userController = UserController::createShared();
-  userController->addEndpointsToRouter(router);
-  
-  docEndpoints->pushBackAll(userController->getEndpoints());
-  
-  auto swaggerController = oatpp::swagger::Controller::createShared(docEndpoints);
-  swaggerController->addEndpointsToRouter(router);
+  /* Get router component */
+  OATPP_COMPONENT(std::shared_ptr<oatpp::web::server::HttpRouter>, router);
 
-  auto staticController = StaticController::createShared();
-  staticController->addEndpointsToRouter(router);
+  oatpp::web::server::api::Endpoints docEndpoints;
+
+  docEndpoints.append(router->addController(UserController::createShared())->getEndpoints());
+
+  router->addController(oatpp::swagger::Controller::createShared(docEndpoints));
+  router->addController(StaticController::createShared());
 
   /* Get connection handler component */
   OATPP_COMPONENT(std::shared_ptr<oatpp::network::ConnectionHandler>, connectionHandler);
