@@ -33,7 +33,7 @@ public:
   DatabaseComponent databaseComponent;
 
   /**
-   * Create ObjectMapper component to serialize/deserialize DTOs in Contoller's API
+   * Create ObjectMapper component to serialize/deserialize DTOs in Controller's API
    */
   OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>, apiObjectMapper)([] {
     auto objectMapper = oatpp::parser::json::mapping::ObjectMapper::createShared();
