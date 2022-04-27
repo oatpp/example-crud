@@ -53,7 +53,7 @@ int main(int argc, const char * argv[]) {
 
   run();
   
-  /* Print how much objects were created during app running, and what have left-probably leaked */
+  /* Print how many objects were created during app running, and what have left-probably leaked */
   /* Disable object counting for release builds using '-D OATPP_DISABLE_ENV_OBJECT_COUNTERS' flag for better performance */
   std::cout << "\nEnvironment:\n";
   std::cout << "objectsCount = " << oatpp::base::Environment::getObjectsCount() << "\n";
