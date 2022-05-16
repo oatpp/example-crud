@@ -60,6 +60,13 @@ add_definitions(
         -DDATABASE_MIGRATIONS="${CMAKE_CURRENT_SOURCE_DIR}/sql"
 )
 
+set(SWAGGER_ROOT_PATH "/swagger" CACHE STRING "Default root path to the Swagger")
+set(SWAGGER_UI_PATH "/ui" CACHE STRING "Default path suffix to the Swagger UI")
+add_compile_definitions(
+    SWAGGER_ROOT_PATH="${SWAGGER_ROOT_PATH}"
+    SWAGGER_UI_PATH="${SWAGGER_UI_PATH}"
+)
+
 if(CMAKE_SYSTEM_NAME MATCHES Linux)
     find_package(Threads REQUIRED)
     target_link_libraries(crud-lib INTERFACE Threads::Threads ${CMAKE_DL_LIBS})
