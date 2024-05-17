@@ -4,7 +4,7 @@
 
 #include "oatpp-swagger/Model.hpp"
 #include "oatpp-swagger/Resources.hpp"
-#include "oatpp/core/macro/component.hpp"
+#include "oatpp/macro/component.hpp"
 
 /**
  *  Swagger ui is served at

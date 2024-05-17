@@ -34,7 +34,7 @@ void run() {
   oatpp::network::Server server(connectionProvider,
                                 connectionHandler);
   
-  OATPP_LOGD("Server", "Running on port %s...", connectionProvider->getProperty("port").toString()->c_str());
+  OATPP_LOGd("Server", "Running on port {}...", connectionProvider->getProperty("port").toString())
   
   server.run();
 
@@ -49,17 +49,17 @@ void run() {
  */
 int main(int argc, const char * argv[]) {
 
-  oatpp::base::Environment::init();
+  oatpp::Environment::init();
 
   run();
   
   /* Print how many objects were created during app running, and what have left-probably leaked */
   /* Disable object counting for release builds using '-D OATPP_DISABLE_ENV_OBJECT_COUNTERS' flag for better performance */
   std::cout << "\nEnvironment:\n";
-  std::cout << "objectsCount = " << oatpp::base::Environment::getObjectsCount() << "\n";
-  std::cout << "objectsCreated = " << oatpp::base::Environment::getObjectsCreated() << "\n\n";
+  std::cout << "objectsCount = " << oatpp::Environment::getObjectsCount() << "\n";
+  std::cout << "objectsCreated = " << oatpp::Environment::getObjectsCreated() << "\n\n";
   
-  oatpp::base::Environment::destroy();
+  oatpp::Environment::destroy();
   
   return 0;
 }

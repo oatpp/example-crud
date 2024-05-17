@@ -5,8 +5,8 @@
 #include "service/UserService.hpp"
 
 #include "oatpp/web/server/api/ApiController.hpp"
-#include "oatpp/parser/json/mapping/ObjectMapper.hpp"
-#include "oatpp/core/macro/codegen.hpp"
+#include "oatpp/web/mime/ContentMappers.hpp"
+#include "oatpp/macro/codegen.hpp"
 
 #include OATPP_CODEGEN_BEGIN(ApiController) //<- Begin Codegen
 
@@ -15,17 +15,17 @@
  */
 class UserController : public oatpp::web::server::api::ApiController {
 public:
-  UserController(OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper))
-    : oatpp::web::server::api::ApiController(objectMapper)
+  UserController(OATPP_COMPONENT(std::shared_ptr<oatpp::web::mime::ContentMappers>, apiContentMappers))
+    : oatpp::web::server::api::ApiController(apiContentMappers)
   {}
 private:
   UserService m_userService; // Create user service.
 public:
 
   static std::shared_ptr<UserController> createShared(
-    OATPP_COMPONENT(std::shared_ptr<ObjectMapper>, objectMapper) // Inject objectMapper component here as default parameter
+    OATPP_COMPONENT(std::shared_ptr<oatpp::web::mime::ContentMappers>, apiContentMappers) // Inject ContentMappers
   ){
-    return std::make_shared<UserController>(objectMapper);
+    return std::make_shared<UserController>(apiContentMappers);
   }
   
   ENDPOINT_INFO(createUser) {

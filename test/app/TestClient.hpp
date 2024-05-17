@@ -2,7 +2,7 @@
 #define DatabaseTestClient_hpp
 
 #include "oatpp/web/client/ApiClient.hpp"
-#include "oatpp/core/macro/codegen.hpp"
+#include "oatpp/macro/codegen.hpp"
 
 #include "dto/UserDto.hpp"
 

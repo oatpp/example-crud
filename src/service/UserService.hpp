@@ -7,7 +7,7 @@
 #include "dto/StatusDto.hpp"
 
 #include "oatpp/web/protocol/http/Http.hpp"
-#include "oatpp/core/macro/component.hpp"
+#include "oatpp/macro/component.hpp"
 
 class UserService {
 private:

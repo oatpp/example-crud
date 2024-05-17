@@ -13,7 +13,7 @@
 void UserControllerTest::onRun() {
 
   /* Remove test database file before running the test */
-  OATPP_LOGI(TAG, "DB-File='%s'", TESTDATABASE_FILE);
+  OATPP_LOGi(TAG, "DB-File='{}'", TESTDATABASE_FILE);
   std::remove(TESTDATABASE_FILE);
 
   /* Register test components */
@@ -32,13 +32,14 @@ void UserControllerTest::onRun() {
     OATPP_COMPONENT(std::shared_ptr<oatpp::network::ClientConnectionProvider>, clientConnectionProvider);
 
     /* Get object mapper component */
-    OATPP_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>, objectMapper);
+    OATPP_COMPONENT(std::shared_ptr<oatpp::web::mime::ContentMappers>, contentMappers);
 
     /* Create http request executor for Api Client */
     auto requestExecutor = oatpp::web::client::HttpRequestExecutor::createShared(clientConnectionProvider);
 
     /* Create Test API client */
-    auto client = TestClient::createShared(requestExecutor, objectMapper);
+    auto client = TestClient::createShared(requestExecutor,
+                                           contentMappers->getMapper("application/json"));
 
     auto dto = UserDto::createShared();
 
@@ -53,7 +54,9 @@ void UserControllerTest::onRun() {
     OATPP_ASSERT(addedUserResponse->getStatusCode() == 200);
 
     /* Read response body as MessageDto */
-    auto addedUserDto = addedUserResponse->readBodyToDto<oatpp::Object<UserDto>>(objectMapper.get());
+    auto addedUserDto = addedUserResponse->readBodyToDto<oatpp::Object<UserDto>>(
+      contentMappers->selectMapperForContent(addedUserResponse->getHeader("Content-Type"))
+    );
 
     int addedUserId = addedUserDto->id;
 
@@ -62,7 +65,9 @@ void UserControllerTest::onRun() {
 
     OATPP_ASSERT(newUserResponse->getStatusCode() == 200);
 
-    auto newUserDto = newUserResponse->readBodyToDto<oatpp::Object<UserDto>>(objectMapper.get());
+    auto newUserDto = newUserResponse->readBodyToDto<oatpp::Object<UserDto>>(
+      contentMappers->selectMapperForContent(addedUserResponse->getHeader("Content-Type"))
+    );
 
     OATPP_ASSERT(newUserDto->id == addedUserId);
 

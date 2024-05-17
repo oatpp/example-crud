@@ -5,6 +5,8 @@
 #include "dto/UserDto.hpp"
 #include "oatpp-sqlite/orm.hpp"
 
+#include "oatpp/base/Log.hpp"
+
 #include OATPP_CODEGEN_BEGIN(DbClient) //<- Begin Codegen
 
 /**
@@ -23,7 +25,7 @@ public:
     migration.migrate(); // <-- run migrations. This guy will throw on error.
 
     auto version = executor->getSchemaVersion();
-    OATPP_LOGD("UserDb", "Migration - OK. Version=%lld.", version);
+    OATPP_LOGd("UserDb", "Migration - OK. Version={}.", version);
 
   }
 

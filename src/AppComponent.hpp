@@ -9,11 +9,13 @@
 
 #include "oatpp/web/server/HttpConnectionHandler.hpp"
 #include "oatpp/web/server/HttpRouter.hpp"
+#include "oatpp/web/mime/ContentMappers.hpp"
+
 #include "oatpp/network/tcp/server/ConnectionProvider.hpp"
 
-#include "oatpp/parser/json/mapping/ObjectMapper.hpp"
+#include "oatpp/json/ObjectMapper.hpp""
 
-#include "oatpp/core/macro/component.hpp"
+#include "oatpp/macro/component.hpp"
 
 /**
  *  Class which creates and holds Application components and registers components in oatpp::base::Environment
@@ -35,10 +37,16 @@ public:
   /**
    * Create ObjectMapper component to serialize/deserialize DTOs in Controller's API
    */
-  OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>, apiObjectMapper)([] {
-    auto objectMapper = oatpp::parser::json::mapping::ObjectMapper::createShared();
-    objectMapper->getDeserializer()->getConfig()->allowUnknownFields = false;
-    return objectMapper;
+  OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::web::mime::ContentMappers>, apiContentMappers)([] {
+
+    auto json = std::make_shared<oatpp::json::ObjectMapper>();
+    json->serializerConfig().json.useBeautifier = true;
+
+    auto mappers = std::make_shared<oatpp::web::mime::ContentMappers>();
+    mappers->putMapper(json);
+
+    return mappers;
+
   }());
   
   /**
@@ -61,10 +69,12 @@ public:
   OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::network::ConnectionHandler>, serverConnectionHandler)([] {
 
     OATPP_COMPONENT(std::shared_ptr<oatpp::web::server::HttpRouter>, router); // get Router component
-    OATPP_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>, objectMapper); // get ObjectMapper component
+    OATPP_COMPONENT(std::shared_ptr<oatpp::web::mime::ContentMappers>, contentMappers); // get ContentMappers component
 
     auto connectionHandler = oatpp::web::server::HttpConnectionHandler::createShared(router);
-    connectionHandler->setErrorHandler(std::make_shared<ErrorHandler>(objectMapper));
+    connectionHandler->setErrorHandler(std::make_shared<ErrorHandler>(
+      contentMappers->getMapper("application/json"))
+    );
     return connectionHandler;
 
   }());
