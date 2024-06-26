@@ -13,7 +13,7 @@
 
 #include "oatpp/network/tcp/server/ConnectionProvider.hpp"
 
-#include "oatpp/json/ObjectMapper.hpp""
+#include "oatpp/json/ObjectMapper.hpp"
 
 #include "oatpp/macro/component.hpp"
 
@@ -72,9 +72,7 @@ public:
     OATPP_COMPONENT(std::shared_ptr<oatpp::web::mime::ContentMappers>, contentMappers); // get ContentMappers component
 
     auto connectionHandler = oatpp::web::server::HttpConnectionHandler::createShared(router);
-    connectionHandler->setErrorHandler(std::make_shared<ErrorHandler>(
-      contentMappers->getMapper("application/json"))
-    );
+    connectionHandler->setErrorHandler(std::make_shared<ErrorHandler>(contentMappers));
     return connectionHandler;
 
   }());
