@@ -27,12 +27,14 @@ target_include_directories(crud-lib PUBLIC src)
 
 find_package(oatpp          1.4.0 REQUIRED)
 find_package(oatpp-swagger  1.4.0 REQUIRED)
+find_package(oatpp-mcp      1.4.0 REQUIRED)
 find_package(oatpp-sqlite   1.4.0 REQUIRED)
 
 target_link_libraries(crud-lib
         # Oat++
         PUBLIC oatpp::oatpp
         PUBLIC oatpp::oatpp-swagger
+        PUBLIC oatpp::oatpp-mcp
         PUBLIC oatpp::oatpp-sqlite
 )
 
@@ -58,6 +60,9 @@ add_definitions(
 
         ## Path to database migration scripts
         -DDATABASE_MIGRATIONS="${CMAKE_CURRENT_SOURCE_DIR}/sql"
+
+        ## Path to database migration scripts
+        -DLOG_FILE="${CMAKE_CURRENT_SOURCE_DIR}/logs.txt"
 )
 
 if(CMAKE_SYSTEM_NAME MATCHES Linux)
