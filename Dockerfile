@@ -1,4 +1,5 @@
 FROM alpine:latest
+ARG VERSION=""
 
 RUN apk update && apk upgrade
 
@@ -12,7 +13,7 @@ ADD . /service
 
 WORKDIR /service/utility
 
-RUN ./install-oatpp-modules.sh Release
+RUN ./install-oatpp-modules.sh Release $VERSION
 
 WORKDIR /service/build
 

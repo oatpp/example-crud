@@ -72,6 +72,13 @@ $ docker build -t example-crud .
 $ docker run -p 8000:8000 -t example-crud
 ```
 
+**Note**: If you build an earlier release, you must specify the release version as an
+build argument, as shown below.
+```
+$ docker build -t example-crud --build-arg VERSION=1.3.0-latest .
+$ docker run -p 8000:8000 -t example-crud
+```
+
 ---
 
 ### Endpoints 
