@@ -29,6 +29,8 @@ find_package(oatpp          1.4.0 REQUIRED)
 find_package(oatpp-swagger  1.4.0 REQUIRED)
 find_package(oatpp-sqlite   1.4.0 REQUIRED)
 
+find_package(SQLite3 REQUIRED)
+
 target_link_libraries(crud-lib
         # Oat++
         PUBLIC oatpp::oatpp

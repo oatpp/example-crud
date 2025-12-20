@@ -42,3 +42,4 @@ cmake-build-debug/
 # sqlite
 **/*.sqlite
 /.vs
+/.vscode
