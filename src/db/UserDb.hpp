@@ -2,8 +2,12 @@
 #ifndef CRUD_USERDB_HPP
 #define CRUD_USERDB_HPP
 
+#ifndef DATABASE_MIGRATIONS
+#define DATABASE_MIGRATIONS "sql"
+#endif
+
 #include "dto/UserDto.hpp"
-#include "oatpp-sqlite/orm.hpp"
+#include "oatpp-postgresql/orm.hpp"
 
 #include "oatpp/base/Log.hpp"
 
