@@ -64,34 +64,34 @@ public:
   }
   
   
-  ENDPOINT_INFO(getUserById) {
-    info->summary = "Get one User by userId";
+  // ENDPOINT_INFO(getUserById) {
+  //   info->summary = "Get one User by userId";
 
-    info->addResponse<Object<UserDto>>(Status::CODE_200, "application/json");
-    info->addResponse<Object<StatusDto>>(Status::CODE_404, "application/json");
-    info->addResponse<Object<StatusDto>>(Status::CODE_500, "application/json");
+  //   info->addResponse<Object<UserDto>>(Status::CODE_200, "application/json");
+  //   info->addResponse<Object<StatusDto>>(Status::CODE_404, "application/json");
+  //   info->addResponse<Object<StatusDto>>(Status::CODE_500, "application/json");
 
-    info->pathParams["userId"].description = "User Identifier";
-  }
-  ENDPOINT("GET", "users/{userId}", getUserById,
-           PATH(Int32, userId))
-  {
-    return createDtoResponse(Status::CODE_200, m_userService.getUserById(userId));
-  }
+  //   info->pathParams["userId"].description = "User Identifier";
+  // }
+  // ENDPOINT("GET", "users/{userId}", getUserById,
+  //          PATH(Int32, userId))
+  // {
+  //   return createDtoResponse(Status::CODE_200, m_userService.getUserById(userId));
+  // }
   
   
-  ENDPOINT_INFO(getUsers) {
-    info->summary = "get all stored users";
+  // ENDPOINT_INFO(getUsers) {
+  //   info->summary = "get all stored users";
 
-    info->addResponse<oatpp::Object<UsersPageDto>>(Status::CODE_200, "application/json");
-    info->addResponse<Object<StatusDto>>(Status::CODE_500, "application/json");
-  }
-  ENDPOINT("GET", "users/offset/{offset}/limit/{limit}", getUsers,
-           PATH(UInt32, offset),
-           PATH(UInt32, limit))
-  {
-    return createDtoResponse(Status::CODE_200, m_userService.getAllUsers(offset, limit));
-  }
+  //   info->addResponse<oatpp::Object<UsersPageDto>>(Status::CODE_200, "application/json");
+  //   info->addResponse<Object<StatusDto>>(Status::CODE_500, "application/json");
+  // }
+  // ENDPOINT("GET", "users/offset/{offset}/limit/{limit}", getUsers,
+  //          PATH(UInt32, offset),
+  //          PATH(UInt32, limit))
+  // {
+  //   return createDtoResponse(Status::CODE_200, m_userService.getAllUsers(offset, limit));
+  // }
   
   
   ENDPOINT_INFO(deleteUser) {

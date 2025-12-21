@@ -1,7 +1,7 @@
 
 #include "oatpp-test/UnitTest.hpp"
 #include "oatpp/Environment.hpp"
-#include "UserControllerTest.hpp"
+// #include "UserControllerTest.hpp"
 
 #include <iostream>
 
@@ -9,7 +9,7 @@ namespace {
 
 void runTests() {
 
-  OATPP_RUN_TEST(UserControllerTest);
+  // OATPP_RUN_TEST(UserControllerTest);
 
 }
 

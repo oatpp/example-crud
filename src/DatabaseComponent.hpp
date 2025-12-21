@@ -3,6 +3,7 @@
 #define CRUD_DATABASECOMPONENT_HPP
 
 #include "db/UserDb.hpp"
+#include <sstream>
 
 class DatabaseComponent {
 public:
@@ -13,7 +14,15 @@ public:
   OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::provider::Provider<oatpp::postgresql::Connection>>, dbConnectionProvider)([] {
 
     /* Create database-specific ConnectionProvider */
-    auto connectionProvider = std::make_shared<oatpp::postgresql::ConnectionProvider>("jdbc:postgresql://database:5432/TaskManager");
+    using namespace std;
+    std::string connectionString = "postgresql://" + 
+                                    string(getenv("DB_USER")) + ":" +
+                                    string(getenv("DB_PASSWORD")) + "@" +
+                                    string(getenv("DB_HOST")) + ":" +
+                                    string(getenv("DB_PORT")) + "/" +
+                                    string(getenv("DB_NAME"));
+    
+    auto connectionProvider = std::make_shared<oatpp::postgresql::ConnectionProvider>(connectionString);
 
     /* Create database-specific ConnectionPool */
     return oatpp::postgresql::ConnectionPool::createShared(connectionProvider,

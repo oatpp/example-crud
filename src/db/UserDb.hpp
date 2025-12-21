@@ -36,7 +36,9 @@ public:
   QUERY(createUser,
         "INSERT INTO AppUser"
         "(username, email, password, role) VALUES "
-        "(:user.username, :user.email, :user.password, :user.role);",
+        "(:user.username, :user.email, :user.password, :user.role)"
+        "RETURNING *;",
+        PREPARE(true), // user prepared statement!
         PARAM(oatpp::Object<UserDto>, user))
 
   QUERY(updateUser,
@@ -52,6 +54,7 @@ public:
 
   QUERY(getUserById,
         "SELECT * FROM AppUser WHERE id=:id;",
+        PREPARE(true), //<-- user prepared statement!
         PARAM(oatpp::Int32, id))
 
   QUERY(getAllUsers,
