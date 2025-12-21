@@ -1,0 +1,7 @@
+services:
+  database:
+    image: postgres:16.3
+    env_file:
+      - ./.env.dev
+    ports:
+      - "4567:5432"
