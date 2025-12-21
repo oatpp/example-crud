@@ -43,3 +43,5 @@ cmake-build-debug/
 **/*.sqlite
 /.vs
 /.vscode
+
+.env.*
