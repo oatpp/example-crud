@@ -1,8 +1,8 @@
 
 CREATE TABLE AppUser (
-    id          INTEGER PRIMARY KEY,
+    id          SERIAL PRIMARY KEY,
     username    VARCHAR UNIQUE,
-    email       VARCHAR UNIQUE,
+    email       VARCHAR,
     password    VARCHAR,
     role        VARCHAR
 );

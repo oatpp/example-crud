@@ -61,7 +61,7 @@ add_definitions(
         # -DTESTDATABASE_FILE="${CMAKE_CURRENT_SOURCE_DIR}/test-db.sqlite"
 
         ## Path to database migration scripts
-        # -DDATABASE_MIGRATIONS="${CMAKE_CURRENT_SOURCE_DIR}/sql"
+        -DDATABASE_MIGRATIONS="${CMAKE_CURRENT_SOURCE_DIR}/sql"
 )
 
 if(CMAKE_SYSTEM_NAME MATCHES Linux)
