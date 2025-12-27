@@ -16,7 +16,9 @@ add_library(crud-lib
         src/DatabaseComponent.hpp
         src/SwaggerComponent.hpp
         src/ErrorHandler.cpp
-        src/ErrorHandler.hpp)
+        src/ErrorHandler.hpp
+        ../Bcrypt.cpp/src/bcrypt.cpp
+        ../Bcrypt.cpp/src/blowfish.cpp)
 
 ## include directories
 
@@ -63,6 +65,8 @@ add_definitions(
         ## Path to database migration scripts
         -DDATABASE_MIGRATIONS="${CMAKE_CURRENT_SOURCE_DIR}/sql"
 )
+
+target_include_directories(crud-lib PRIVATE ../Bcrypt.cpp/include)
 
 if(CMAKE_SYSTEM_NAME MATCHES Linux)
     find_package(Threads REQUIRED)

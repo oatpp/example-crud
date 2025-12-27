@@ -1,7 +1,9 @@
 #include "UserService.hpp"
+#include "bcrypt.h"
 
 oatpp::Object<ReturnUserDto> UserService::createUser(const oatpp::Object<UserDto> &dto)
 {
+    dto.get()->password = bcrypt::generateHash(dto.get()->password, 10);
     auto dbResult = m_database->createUser(dto);
     OATPP_ASSERT_HTTP(dbResult->isSuccess(), Status::CODE_500, dbResult->getErrorMessage());
 
