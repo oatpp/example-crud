@@ -25,6 +25,7 @@ public:
 
     oatpp::orm::SchemaMigration migration(executor);
     migration.addFile(1 /* start from version 1 */, DATABASE_MIGRATIONS "/001_init.sql");
+    migration.addFile(2, DATABASE_MIGRATIONS "/002.sql");
     // TODO - Add more migrations here.
     migration.migrate(); // <-- run migrations. This guy will throw on error.
 
@@ -35,9 +36,9 @@ public:
 
   QUERY(createUser,
         "INSERT INTO AppUser"
-        "(username, email, password, role) VALUES "
-        "(:user.username, :user.email, :user.password, :user.role)"
-        "RETURNING *;",
+        "(username, email, password) VALUES "
+        "(:user.username, :user.email, :user.password)"
+        "RETURNING (id);",
         PREPARE(true), // user prepared statement!
         PARAM(oatpp::Object<UserDto>, user))
 
@@ -53,8 +54,11 @@ public:
         PARAM(oatpp::Object<UserDto>, user))
 
   QUERY(getUserById,
-        "SELECT * FROM AppUser WHERE id=:id;",
-        PREPARE(true), //<-- user prepared statement!
+      //   "SELECT id, username, email, role, created_at::text as created_at, updated_at::text as updated_at "
+      //   "SELECT id, username, email, role, created_at::timestamp as created_at, updated_at "
+        "select * from get_user_by_id(:id) ",
+      //   "FROM AppUser WHERE id=1;",
+        PREPARE(false), //<-- user prepared statement!
         PARAM(oatpp::Int32, id))
 
   QUERY(getAllUsers,

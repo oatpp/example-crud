@@ -64,20 +64,20 @@ public:
   }
   
   
-  // ENDPOINT_INFO(getUserById) {
-  //   info->summary = "Get one User by userId";
+  ENDPOINT_INFO(getUserById) {
+    info->summary = "Get one User by userId";
 
-  //   info->addResponse<Object<UserDto>>(Status::CODE_200, "application/json");
-  //   info->addResponse<Object<StatusDto>>(Status::CODE_404, "application/json");
-  //   info->addResponse<Object<StatusDto>>(Status::CODE_500, "application/json");
+    info->addResponse<Object<UserDto>>(Status::CODE_200, "application/json");
+    info->addResponse<Object<StatusDto>>(Status::CODE_404, "application/json");
+    info->addResponse<Object<StatusDto>>(Status::CODE_500, "application/json");
 
-  //   info->pathParams["userId"].description = "User Identifier";
-  // }
-  // ENDPOINT("GET", "users/{userId}", getUserById,
-  //          PATH(Int32, userId))
-  // {
-  //   return createDtoResponse(Status::CODE_200, m_userService.getUserById(userId));
-  // }
+    info->pathParams["userId"].description = "User Identifier";
+  }
+  ENDPOINT("GET", "users/{userId}", getUserById,
+           PATH(Int32, userId))
+  {
+    return createDtoResponse(Status::CODE_200, m_userService.getUserById(userId));
+  }
   
   
   // ENDPOINT_INFO(getUsers) {
