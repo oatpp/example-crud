@@ -16,11 +16,11 @@
 /**
  * UserDb client definitions.
  */
-class UserDb : public oatpp::orm::DbClient {
+class UserDb : public oatpp::orm::DbClient
+{
 public:
-
-  UserDb(const std::shared_ptr<oatpp::orm::Executor>& executor)
-    : oatpp::orm::DbClient(executor)
+  UserDb(const std::shared_ptr<oatpp::orm::Executor> &executor)
+      : oatpp::orm::DbClient(executor)
   {
 
     oatpp::orm::SchemaMigration migration(executor);
@@ -31,7 +31,6 @@ public:
 
     auto version = executor->getSchemaVersion();
     OATPP_LOGd("UserDb", "Migration - OK. Version={}.", version);
-
   }
 
   QUERY(createUser,
@@ -54,12 +53,14 @@ public:
         PARAM(oatpp::Object<UserDto>, user))
 
   QUERY(getUserById,
-      //   "SELECT id, username, email, role, created_at::text as created_at, updated_at::text as updated_at "
-      //   "SELECT id, username, email, role, created_at::timestamp as created_at, updated_at "
-        "select * from get_user_by_id(:id) ",
-      //   "FROM AppUser WHERE id=1;",
-        PREPARE(false), //<-- user prepared statement!
+        "select * from get_user_by_id(:id)",
+        PREPARE(true), //<-- user prepared statement!
         PARAM(oatpp::Int32, id))
+
+  QUERY(getUserByUsername,
+        "select * from get_user_by_username(:username)",
+        PREPARE(true),
+        PARAM(oatpp::String, username))
 
   QUERY(getAllUsers,
         "SELECT * FROM AppUser LIMIT :limit OFFSET :offset;",
@@ -69,9 +70,8 @@ public:
   QUERY(deleteUserById,
         "DELETE FROM AppUser WHERE id=:id;",
         PARAM(oatpp::Int32, id))
-
 };
 
 #include OATPP_CODEGEN_END(DbClient) //<- End Codegen
 
-#endif //CRUD_USERDB_HPP
+#endif // CRUD_USERDB_HPP

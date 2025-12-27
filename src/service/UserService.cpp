@@ -12,6 +12,35 @@ oatpp::Object<ReturnUserDto> UserService::createUser(const oatpp::Object<UserDto
     return getUserById(result[0].get()->id);
 }
 
+oatpp::Object<ReturnUserDto> UserService::verifyUser(const oatpp::Object<LoginUserDto> &dto)
+{
+    auto user = this->getUserByUsername(dto.get()->username);
+    OATPP_ASSERT_HTTP(user.get(), Status::CODE_500, "Unkown error");
+
+    OATPP_ASSERT_HTTP(bcrypt::validatePassword(dto.get()->password, user.get()->password), Status::CODE_404, "User not found");
+
+    auto returnUser = ReturnUserDto::createShared();
+    returnUser->id = user->id;
+    returnUser->userName = user->userName;
+    returnUser->createdAt = user->createdAt;
+    returnUser->updatedAt = user->updatedAt;
+    returnUser->role = user->role;
+    returnUser->email = user->email;
+
+    return returnUser;
+}
+
+oatpp::Object<UserDto> UserService::getUserByUsername(const oatpp::String &username)
+{
+    auto result = m_database->getUserByUsername(username);
+    OATPP_ASSERT_HTTP(result->isSuccess(), Status::CODE_500, result->getErrorMessage());
+    OATPP_ASSERT_HTTP(result->hasMoreToFetch(), Status::CODE_404, "User not found");
+
+    auto users = result->fetch<oatpp::Vector<oatpp::Object<UserDto>>>();
+    OATPP_ASSERT_HTTP(users->size() == 1, Status::CODE_500, "Unknown error");
+    return users[0];
+}
+
 oatpp::Object<UserDto> UserService::updateUser(const oatpp::Object<UserDto> &dto)
 {
     return oatpp::Object<UserDto>();
